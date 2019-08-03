@@ -1,4 +1,6 @@
-using LCU.Graphs.Registry.Enterprises.State;
+using LCU.API.State.Models;
+using LCU.Presentation.State;
+using LCU.State.API.ForgePublic.Harness;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -12,7 +14,7 @@ namespace LCU.API.State
 {
 	[Serializable]
 	[DataContract]
-	public class SaveStateRequest
+	public class SaveStateConfigRequest
 	{
 		[DataMember]
 		public virtual LCUStateConfiguration Config { get; set; }
@@ -25,20 +27,10 @@ namespace LCU.API.State
 			[HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
 			ILogger log)
 		{
-			return await req.WithState<SaveStateRequest, LCUState>(log, async (details, reqData, state, stateMgr) =>
-			{
-				log.LogInformation("Save State function processed a request.");
-
-				var stateConfigRef = stateMgr.LoadStateConfigRef(details.EnterpriseAPIKey, reqData.Config.Lookup);
-
-				await stateMgr.SaveState(stateConfigRef, reqData.Config);
-
-				state.States = await stateMgr.ListStateContainers(details.EnterpriseAPIKey);
-
-				state.ActiveState = reqData.Config;
-
-				return state;
-			});
+			return await req.Manage<SaveStateConfigRequest, LCUIDEState, LCUIDEStateHarness>(log, async (mgr, reqData) =>
+            {
+                return await mgr.SaveStateConfig(reqData.Config);
+            });
 		}
 	}
 }

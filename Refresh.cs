@@ -1,4 +1,5 @@
-using LCU.Graphs.Registry.Enterprises.State;
+using LCU.API.State.Models;
+using LCU.State.API.ForgePublic.Harness;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -15,14 +16,10 @@ namespace LCU.API.State
 			[HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
 			ILogger log)
 		{
-			return await req.WithState<dynamic, LCUState>(log, async (details, reqData, state, stateMgr) =>
-			{
-				var states = await stateMgr.ListStateContainers(details.EnterpriseAPIKey);
-
-				state.States = states;
-
-				return state;
-			});
+			return await req.Manage<dynamic, LCUIDEState, LCUIDEStateHarness>(log, async (mgr, reqData) =>
+            {
+                return await mgr.Refresh();
+            });
 		}
 	}
 }
