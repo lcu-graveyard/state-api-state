@@ -29,7 +29,7 @@ namespace LCU.API.State
 			[HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
 			ILogger log)
 		{
-			return await req.Manage<SetActiveRequest, LCUIDEState, LCUIDEStateHarness>(log, async (mgr, reqData) =>
+			return await req.Manage<SetActiveRequest, LCUState, LCUStateHarness>(log, async (mgr, reqData) =>
             {
                 return await mgr.SetActive(reqData.Lookup, reqData.IsSettings);
             });

@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace LCU.State.API.ForgePublic.Harness
 {
-    public class LCUIDEStateHarness : LCUStateHarness<LCUIDEState>
+    public class LCUStateHarness : LCUStateHarness<LCUState>
     {
         #region Fields
         protected readonly ApplicationManagerClient appMgr;
@@ -24,7 +24,7 @@ namespace LCU.State.API.ForgePublic.Harness
         #endregion
 
         #region Constructors
-        public LCUIDEStateHarness(HttpRequest req, ILogger log, LCUIDEState state)
+        public LCUStateHarness(HttpRequest req, ILogger log, LCUState state)
             : base(req, log, state)
         {
             appMgr = req.ResolveClient<ApplicationManagerClient>(log);
@@ -32,7 +32,7 @@ namespace LCU.State.API.ForgePublic.Harness
         #endregion
 
         #region API Methods
-        public virtual async Task<LCUIDEState> LoadStates()
+        public virtual async Task<LCUState> LoadStates()
         {
             var statesResp = await appMgr.ListStates(details.EnterpriseAPIKey);
 
@@ -41,14 +41,14 @@ namespace LCU.State.API.ForgePublic.Harness
             return state;
         }
 
-        public virtual async Task<LCUIDEState> Refresh()
+        public virtual async Task<LCUState> Refresh()
         {
             await LoadStates();
 
             return state;
         }
 
-        public virtual async Task<LCUIDEState> SaveStateConfig(LCUStateConfiguration stateCfg)
+        public virtual async Task<LCUState> SaveStateConfig(LCUStateConfiguration stateCfg)
         {
             logger.LogInformation("Saving State configuration");
 
@@ -61,7 +61,7 @@ namespace LCU.State.API.ForgePublic.Harness
             return state;
         }
 
-        public virtual async Task<LCUIDEState> SetActive(string lookup, bool isSettings)
+        public virtual async Task<LCUState> SetActive(string lookup, bool isSettings)
         {
             logger.LogInformation("Setting active State");
 

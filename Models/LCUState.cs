@@ -7,7 +7,7 @@ namespace LCU.API.State.Models
 {
 	[Serializable]
 	[DataContract]
-	public class LCUIDEState
+	public class LCUState
 	{
 		[DataMember]
 		public virtual LCUStateConfiguration ActiveState { get; set; }

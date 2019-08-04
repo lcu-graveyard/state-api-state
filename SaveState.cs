@@ -27,7 +27,7 @@ namespace LCU.API.State
 			[HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
 			ILogger log)
 		{
-			return await req.Manage<SaveStateConfigRequest, LCUIDEState, LCUIDEStateHarness>(log, async (mgr, reqData) =>
+			return await req.Manage<SaveStateConfigRequest, LCUState, LCUStateHarness>(log, async (mgr, reqData) =>
             {
                 return await mgr.SaveStateConfig(reqData.Config);
             });
