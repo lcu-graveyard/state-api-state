@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using LCU.API.State.Models;
 using LCU.Graphs.Registry.Enterprises.Apps;
-using LCU.Presentation.Personas.Applications;
+using LCU.Personas.Client.Applications;
 using LCU.Presentation.State;
-using LCU.Runtime;
+using LCU.StateAPI;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
