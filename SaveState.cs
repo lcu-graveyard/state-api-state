@@ -29,6 +29,8 @@ namespace LCU.API.State
 		{
 			return await req.Manage<SaveStateConfigRequest, LCUState, LCUStateHarness>(log, async (mgr, reqData) =>
             {
+				log.LogInformation($"Saving State Config: {reqData.Config}");
+
                 return await mgr.SaveStateConfig(reqData.Config);
             });
 		}

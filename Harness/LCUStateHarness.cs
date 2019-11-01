@@ -34,6 +34,8 @@ namespace LCU.State.API.ForgePublic.Harness
         #region API Methods
         public virtual async Task<LCUState> LoadStates()
         {
+            logger.LogInformation("Loading States");
+
             var statesResp = await appMgr.ListStates(details.EnterpriseAPIKey);
 
             state.States = statesResp.Model;
@@ -43,6 +45,8 @@ namespace LCU.State.API.ForgePublic.Harness
 
         public virtual async Task<LCUState> Refresh()
         {
+            logger.LogInformation("Refreshing");
+
             await LoadStates();
 
             return state;
