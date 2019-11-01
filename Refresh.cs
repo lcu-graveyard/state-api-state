@@ -18,6 +18,8 @@ namespace LCU.API.State
 		{
 			return await req.Manage<dynamic, LCUState, LCUStateHarness>(log, async (mgr, reqData) =>
             {
+				log.LogInformation("Refreshing");
+
                 return await mgr.Refresh();
             });
 		}

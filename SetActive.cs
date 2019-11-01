@@ -31,6 +31,8 @@ namespace LCU.API.State
 		{
 			return await req.Manage<SetActiveRequest, LCUState, LCUStateHarness>(log, async (mgr, reqData) =>
             {
+				log.LogInformation($"Setting Active: {reqData.Lookup} {reqData.IsSettings}");
+
                 return await mgr.SetActive(reqData.Lookup, reqData.IsSettings);
             });
 		}
